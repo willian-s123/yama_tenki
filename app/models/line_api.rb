@@ -9,7 +9,11 @@ class LineApi
     }
     @request_body = request_body
     @signature = signature
-    @events = @client.parse_events_from(@body)
+  end
+
+  def events
+    return [] if @client.nil? || @body.nil?
+    @client.parse_events_from(@body)
   end
 
   def valid?
@@ -17,7 +21,7 @@ class LineApi
   end
 
   def send
-    @events.each do |event|
+    events.each do |event|
       case event
       when Line::Bot::Event::Message
         case event.type
