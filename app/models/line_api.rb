@@ -12,12 +12,13 @@ class LineApi
   end
 
   def events
-    return [] if @client.nil? || @body.nil?
-    @client.parse_events_from(@body)
+    return [] if @client.nil? || @request_body.nil?
+    @client.parse_events_from(@request_body)
   end
 
   def valid?
-    @client.validate_signature(body, signature)
+    return false if @client.nil? || @request_body.nil? || @signature.nil?
+    @client.validate_signature(@request_body, @signature)
   end
 
   def send
