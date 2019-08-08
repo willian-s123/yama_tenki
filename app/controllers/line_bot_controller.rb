@@ -6,7 +6,7 @@ class LineBotController < ApplicationController
       @line_api.send
       head :ok
     else
-      error 400
+      render status: 400
     end
   end
 
