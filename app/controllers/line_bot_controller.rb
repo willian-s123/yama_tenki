@@ -1,8 +1,9 @@
 class LineBotController < ApplicationController
 
   def callback
-    if line_api.valid?
-      line_api.send
+    set_line_api
+    if @line_api.valid?
+      @line_api.send
       head :ok
     else
       render status: :bad_request
@@ -19,7 +20,7 @@ class LineBotController < ApplicationController
     request.env['HTTP_X_LINE_SIGNATURE']
   end
 
-  def line_api
-    LineApi.new(ENV["LINE_CHANNEL_SECRET"], ENV["LINE_CHANNEL_TOKEN"], request_body, signature)
+  def set_line_api
+    @line_api = LineApi.new(ENV["LINE_CHANNEL_SECRET"], ENV["LINE_CHANNEL_TOKEN"], request_body, signature)
   end
 end
