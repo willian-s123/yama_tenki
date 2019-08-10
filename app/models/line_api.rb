@@ -11,11 +11,6 @@ class LineApi
     @signature = signature
   end
 
-  def events
-    return [] if @client.nil? || @request_body.nil?
-    @client.parse_events_from(@request_body)
-  end
-
   def valid?
     return false if @client.nil? || @request_body.nil? || @signature.nil?
     @client.validate_signature(@request_body, @signature)
@@ -23,17 +18,14 @@ class LineApi
 
   def send
     events.each do |event|
-      case event
-      when Line::Bot::Event::Message
-        case event.type
-        when Line::Bot::Event::MessageType::Text
-          message = {
-            type: 'text',
-            text: event.message['text']
-          }
-        end
-      end
-      @client.reply_message(event['replyToken'], message)
+      LineMessage.new(client: @client, message: event.message['text'], reply_token: event['replyToken']).reply
     end
+  end
+
+  private
+
+  def events
+    return [] if @client.nil? || @request_body.nil?
+    @client.parse_events_from(@request_body)
   end
 end
