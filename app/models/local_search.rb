@@ -2,8 +2,7 @@ class LocalSearch
 
   def initialize(name)
     @mountain_name = name
-    @app_id = ENV['YAHOO_APP_ID']
-    @base_url = 'https://map.yahooapis.jp/geocode/V1/geoCoder'
+    @map_key = ENV['GOOGLE_MAP_KEY']
   end
 
   def http_get
@@ -13,21 +12,25 @@ class LocalSearch
 
   def search
     data = JSON.parse(http_get)
-    return data['Feature'][0]['Geometry']['Coordinates']
+    lat = data["results"][0]["geometry"]["location"]["lat"]
+    lng = data["results"][0]["geometry"]["location"]["lng"]
+    return [lat, lng]
   end
 
   private
 
+  def base_url
+    'https://maps.googleapis.com/maps/api/geocode/json'
+  end
+
   def target_url
-    @base_url + '?' + URI.encode_www_form(params)
+    base_url + '?' + URI.encode_www_form(params)
   end
 
   def params
     {
-      'appid' => @app_id,
-      'query' => @mountain_name,
-      'results' => '1',
-      'output' => 'json'
+      'address' => @mountain_name,
+      'key' => @map_key
     }
   end
 end

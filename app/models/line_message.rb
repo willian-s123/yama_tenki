@@ -16,7 +16,7 @@ class LineMessage
 
   def make_reply_message
     if valid?
-      message = LocalSearch.new(@message).search
+      message = WeatherForecast.new(@message).weather_info
       { type: 'text', text: message }
     else
       { type: 'text', text: '山名を入力してください' }
