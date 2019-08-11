@@ -12,7 +12,7 @@ class WeatherForecast
     Net::HTTP.get(uri)
   end
 
-  def weather_inf
+  def weather_info
     data = JSON.parse(http_get)
     data['daily']['summary']
   end
