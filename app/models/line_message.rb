@@ -9,25 +9,29 @@ class LineMessage
   end
 
   def reply
-    @client.reply_message(@reply_token, message_format)
+    @client.reply_message(@reply_token, make_reply_message)
   end
 
   private
 
-  def message_format
+  def make_reply_message
     if valid?
-      { type: 'text', text: @message }
+      message = LocalSearch.new(@message).search
+      { type: 'text', text: message }
     else
       { type: 'text', text: '山名を入力してください' }
     end
   end
 
   def valid?
-    return false unless @message.is_a?(String)
-    PERMISSION_WARDS.include?(last_word)
+    last_word.is_a?(String) && PERMISSION_WARDS.include?(last_word)
   end
 
   def last_word
-    @message.last
+    if @message.present?
+      @message.last
+    else
+      ''
+    end
   end
 end
