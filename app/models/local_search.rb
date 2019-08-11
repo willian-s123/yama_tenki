@@ -1,14 +1,18 @@
 class LocalSearch
 
   def initialize(name)
-    @mountain = name
+    @mountain_name = name
     @app_id = ENV['YAHOO_APP_ID']
     @base_url = 'https://map.yahooapis.jp/geocode/V1/geoCoder'
   end
 
+  def http_get
+    uri = URI.parse(target_url)
+    Net::HTTP.get(uri)
+  end
+
   def search
-    json = open(target_url).read
-    data = JSON.parse(json)
+    data = JSON.parse(http_get)
     return data['Feature'][0]['Geometry']['Coordinates']
   end
 
@@ -21,7 +25,7 @@ class LocalSearch
   def params
     {
       'appid' => @app_id,
-      'query' => @mountain,
+      'query' => @mountain_name,
       'results' => '1',
       'output' => 'json'
     }
