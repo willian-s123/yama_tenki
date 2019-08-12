@@ -12,9 +12,9 @@ class WeatherForecast
     Net::HTTP.get(uri)
   end
 
-  def weather_info
+  def weather_info_json
     data = JSON.parse(http_get)
-    data['daily']['summary']
+    data['daily']['data']
   end
 
   private

@@ -16,8 +16,7 @@ class LineMessage
 
   def make_reply_message
     if valid?
-      message = WeatherForecast.new(@message).weather_info
-      { type: 'text', text: message }
+      LineJson.new(@message).raply_json
     else
       { type: 'text', text: '山名を入力してください' }
     end
