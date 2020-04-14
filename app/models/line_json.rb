@@ -11,8 +11,8 @@ class LineJson
       "template": {
         "type": "carousel",
         "columns": result_columns,
-        "imageAspectRatio": "rectangle",
-        "imageSize": "cover"
+        "imageAspectRatio": "square",
+        "imageSize": "contain"
       }
     }
   end
