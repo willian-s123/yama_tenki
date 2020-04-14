@@ -28,7 +28,7 @@ class LineJson
       date = Time.at(info['time'])
       youbi = %w[日 月 火 水 木 金 土]
       {
-        "thumbnailImageUrl": ActionController::Base.helpers.asset_url("#{info['icon']}.png"),
+        "thumbnailImageUrl": 'https://yama-tenki.herokuapp.com' + ActionController::Base.helpers.asset_url("#{info['icon']}.png"),
         "imageBackgroundColor": "#FFFFFF",
         "title": "#{date.month}月#{date.day}日(#{youbi[date.wday]})",
         "text": "最高低気温: #{info['temperatureHigh'].round}度、#{info['temperatureLow'].round}度\n詳細: #{info['summary']}",
