@@ -1,25 +1,12 @@
-# README
+# 山天気予報LINE_BOT
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+山の名前を送信するだけで、その山の１週間分の天気予報が返事で返ってくるbot
 
-Things you may want to cover:
+## LINE BOT QRコード
 
-* Ruby version
+![QRコード](https://github.com/willian-s123/yama_tenki/blob/media/media/yama_tenki_bot_qr.png)
 
-* System dependencies
+## 動作
 
-* Configuration
+![動作](https://github.com/willian-s123/yama_tenki/blob/media/media/test.gif)
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-# yama_tenki
