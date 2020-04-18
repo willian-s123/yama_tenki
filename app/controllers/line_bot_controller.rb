@@ -1,13 +1,14 @@
 class LineBotController < ApplicationController
 
+  rescue_from :StandardError, with: :application_error
+
   def callback
-    set_line_api
-    if @line_api.valid?
-      @line_api.send
-      head :ok
-    else
-      render status: :bad_request
-    end
+    @line_api = LineApi.new(ENV["LINE_CHANNEL_SECRET"],
+                            ENV["LINE_CHANNEL_TOKEN"],
+                            request_body,
+                            signature)
+    @line_api.send
+    head :ok
   end
 
   private
@@ -20,7 +21,7 @@ class LineBotController < ApplicationController
     request.env['HTTP_X_LINE_SIGNATURE']
   end
 
-  def set_line_api
-    @line_api = LineApi.new(ENV["LINE_CHANNEL_SECRET"], ENV["LINE_CHANNEL_TOKEN"], request_body, signature)
+  def application_error
+    render json: { error: { message: '何らかのエラーが発生しました' } }, status: :internal_server_error
   end
 end
