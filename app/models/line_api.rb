@@ -2,10 +2,10 @@ require 'line/bot'
 
 class LineApi
 
-  def initialize(line_chanel_secret, line_channel_token, request_body, signature)
+  def initialize(request_body, signature)
     @client ||= Line::Bot::Client.new { |config|
-      config.channel_secret = line_chanel_secret
-      config.channel_token = line_channel_token
+      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
     }
     @request_body = request_body
     @signature = signature

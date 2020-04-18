@@ -3,10 +3,7 @@ class LineBotController < ApplicationController
   rescue_from :StandardError, with: :application_error
 
   def callback
-    @line_api = LineApi.new(ENV["LINE_CHANNEL_SECRET"],
-                            ENV["LINE_CHANNEL_TOKEN"],
-                            request_body,
-                            signature)
+    @line_api = LineApi.new(request_body, signature)
     @line_api.send
     head :ok
   end
